@@ -64,27 +64,52 @@ export const register = async (req, res) => {
 //         message:"User Register"
 //     })
 // });
+// export const verifyUser = tryCatch(async (req, res) => {
+//     const { otp, activationToken } = req.body;
+//     const verify = jwt.verify(activationToken, process.env.Activation_Secret);
+
+//     if (!verify)
+//         return res.status(400).json({ message: 'OTP Expired' });
+
+//     if (verify.otp !== otp)
+//         return res.status(400).json({ message: 'Wrong OTP' });
+
+//     // ✅ Hash the password before saving
+//     const hashedPassword = await bcrypt.hash(verify.user.password, 10);
+
+//     await User.create({
+//         name: verify.user.name,
+//         email: verify.user.email,
+//         password: hashedPassword  // ✅ Now stored as a hashed password
+//     });
+
+//     res.json({ message: "User Registered" });
+// });
 export const verifyUser = tryCatch(async (req, res) => {
     const { otp, activationToken } = req.body;
-    const verify = jwt.verify(activationToken, process.env.Activation_Secret);
-
-    if (!verify)
-        return res.status(400).json({ message: 'OTP Expired' });
-
-    if (verify.otp != otp)
-        return res.status(400).json({ message: 'Wrong OTP' });
-
-    // ✅ Hash the password before saving
+  
+    let verify;
+    try {
+      verify = jwt.verify(activationToken, process.env.Activation_Secret);
+    } catch (err) {
+      return res.status(400).json({ message: 'OTP Expired or Invalid' });
+    }
+  
+    if (String(verify.otp) !== String(otp)) {
+      return res.status(400).json({ message: 'Wrong OTP' });
+    }
+  
     const hashedPassword = await bcrypt.hash(verify.user.password, 10);
-
+  
     await User.create({
-        name: verify.user.name,
-        email: verify.user.email,
-        password: hashedPassword  // ✅ Now stored as a hashed password
+      name: verify.user.name,
+      email: verify.user.email,
+      password: hashedPassword
     });
-
+  
     res.json({ message: "User Registered" });
-});
+  });
+  
 
 
 
@@ -149,3 +174,42 @@ export const myProfile=tryCatch(async(req,res)=>{
     const user=await User.findById(req.user._id);
     res.json({user})
 })
+
+
+export const resendOtp = tryCatch(async (req, res) => {
+  const { activationToken } = req.body;
+
+  if (!activationToken)
+    return res.status(400).json({ message: "Token not provided" });
+
+  let decoded;
+  try {
+    decoded = jwt.verify(activationToken, process.env.Activation_Secret);
+  } catch (err) {
+    return res.status(400).json({ message: "Invalid or expired token" });
+  }
+
+  const newOtp = Math.floor(100000 + Math.random() * 900000); // 6-digit OTP
+
+  const newToken = jwt.sign(
+    {
+      user: decoded.user,
+      otp: newOtp,
+    },
+    process.env.Activation_Secret,
+    { expiresIn: "5m" }
+  );
+
+  const data = {
+    name: decoded.user.name,
+    otp: newOtp,
+  };
+
+  await sendMail(decoded.user.email, "Jeet E-learning - OTP", data);
+
+  res.status(200).json({
+    message: "OTP resent to your email",
+    activationToken: newToken, // Send back new token
+  });
+});
+

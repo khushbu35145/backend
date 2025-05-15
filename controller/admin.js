@@ -1,28 +1,44 @@
 import { Courses } from "../models/courses.js";
 import { Lecture } from "../models/lecture.js";
 import tryCatch from "../tryCatch.js";
-import trycatch from '../tryCatch.js';
 import {rm, unlinkSync} from 'fs';
+import path from "path";
 import {promisify} from 'util';
 import fs from 'fs'
 import { User } from "../models/user.js";
 
-export const createCourse=trycatch(async(req,res)=>{
-    const {title,description,category,createdBy,duration,price}=req.body
-    const image=req.file
-    await Courses.create({
-        title,
-        description,
-        category,
-        createdBy,
-        image:image?.path,
-        duration,
-        price,
-    });
-    res.status(201).json({
-        message:"Cousrse Created Successfully"
-    });
+export const createCourse = tryCatch(async (req, res) => {
+    console.log("📥 Request body:", req.body);
+    console.log("🖼️ Uploaded file:", req.file);
+
+    const { title, description, category, createdBy, duration, price } = req.body;
+    const image = req.file;
+
+    if (!image) {
+        console.log("🚫 No file uploaded!");
+        return res.status(400).json({ message: "Image is required" });
+    }
+
+    try {
+        console.log("📚 Creating course in DB...");
+        await Courses.create({
+            title,
+            description,
+            category,
+            createdBy,
+            image: image.path,
+            duration,
+            price,
+        });
+        console.log("✅ Course created");
+        res.status(201).json({ message: "Course Created Successfully" });
+    } catch (dbError) {
+        console.error("❌ DB Error:", dbError);
+        throw dbError;
+    }
 });
+
+
 export const addLecture=tryCatch(async(req,res)=>{
     const course=await Courses.findOne(req.params.id)
     if(!course) return res.status(404).json({

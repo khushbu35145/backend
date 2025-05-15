@@ -24,7 +24,7 @@ const schema=new mongoose.Schema({
         type:String,
         required:true,
     },
-    createBy:{
+    createdBy:{
         type:String,
         required:true
     },

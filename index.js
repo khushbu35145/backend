@@ -28,6 +28,8 @@ import cors from 'cors';
 import coursesRoutes from './routes/courses.js'
 import adminRoutes from './routes/admin.js'
 import RazorPay from 'razorpay'
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 // Load environment variables
 dotenv.config();
@@ -40,7 +42,9 @@ dotenv.config();
 const app = express();
 app.use(express.json()); // Allows JSON data in requests
 app.use(cors()); // Enables CORS for frontend access
-
+app.use(express.urlencoded({ extended: true })); // <-- required for form data
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 // MongoDB Connection
 const dbConnection = async () => {
     try {
@@ -52,12 +56,27 @@ const dbConnection = async () => {
     }
 };
 dbConnection();
+app.use('/uploads', express.static('uploads')); 
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Import Routes
 import userRoutes from './routes/user.js';
+import contactRoutes from './routes/contact.js'
+import applyRoutes from './routes/apply.js'
+import EmitraRoutes from './routes/emitra.js'
+import CSCRoutes from './routes/CSCRoute.js'
+import IIBFRoutes from './routes/IIBFRoute.js'
+app.use('/api', applyRoutes)
+
+app.use('/api/contact',contactRoutes);
 app.use('/api', userRoutes);
+app.use('/api', CSCRoutes);
+app.use('/api', IIBFRoutes);
 app.use('/api',coursesRoutes);
 app.use('/api',adminRoutes);
+app.use('/api', EmitraRoutes);
+import paymentRoutes from './routes/payment.js';
+app.use('/api/payment', paymentRoutes);
 
 // Error Handling Middleware
 app.use((err, req, res, next) => {
@@ -70,3 +89,13 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
     console.log(`🚀 Server is Running on port ${PORT}`);
 });
+app.use((err, req, res, next) => {
+    console.error("🔥 Error caught:", err);
+    res.status(500).json({ 
+        message: "Internal Server Error", 
+        error: err.message,
+        stack: err.stack 
+    });
+});
+
+  
