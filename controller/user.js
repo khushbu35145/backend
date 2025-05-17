@@ -1,6 +1,6 @@
 import sendMail from "../middleware/sendMail.js";
 import { User } from "../models/user.js";
-import bcrypt from "bcrypt";
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import tryCatch from "../tryCatch.js";
 
