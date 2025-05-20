@@ -151,6 +151,8 @@ const kioskSchema = new mongoose.Schema({
     aadharCopy: String,
     panCardCopy: String,
     rentAgreement: String,
+    rscit:String,
+    affidavit:String,
     policeVerificationOther: String,
     otherDocuments: String,
   },

@@ -264,7 +264,7 @@ const registerKiosk = async (req, res) => {
       "marksheet",
       "aadharCopy",
       "panCardCopy",
-      "Rscit",
+      "rscit",
       "affidavit",
       "rentAgreement",
       "policeVerificationOther",
