@@ -16,5 +16,4 @@ const fileFields = [
 ];
 
 router.post('/CSC', upload.fields(fileFields), cscController.submitApplication);
-
 export default router;

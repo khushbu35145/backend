@@ -1,23 +1,3 @@
-// import {Apply } from '../models/apply.js'
-// import nodemailer from "nodemailer";
-// import applicationValidationSchema from "../validators/applicationSchema.js";
-
-//  export const submitApplication = async (req, res) => {
-//   try {
-//     const { error } = applicationValidationSchema.validate(req.body);
-//     if (error) {
-//       return res.status(400).json({ message: error.details[0].message });
-//     }
-
-//     const newApplication = new Apply(req.body);
-//     await newApplication.save();
-
-//     res.status(200).json({ message: "Application submitted successfully." });
-//   } catch (err) {
-//     console.error("Error saving application:", err);
-//     res.status(500).json({ message: "Server error. Please try again later." });
-//   }
-// };
 import nodemailer from "nodemailer";
 import { Apply } from '../models/apply.js';
 import applicationValidationSchema from "../validators/applicationSchema.js";

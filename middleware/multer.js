@@ -1,23 +1,4 @@
-// import multer from 'multer';
-// import { v4 as uuidv4 } from 'uuid';
 
-
-
-// const storage=multer.diskStorage({
-//     destination(req,file,cb){
-//         cb(null,'uploads')
-//     },
-//     filename(req,file,cb){
-//         const id=uuidv4()
-//         const extName=file.originalname.split(".").pop()
-//         const filename=`${id}.${extName}`
-//         cb(null,filename)
-//     }
-// });
-// export const uploadFiles = multer({
-//     storage,
-//     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-//   }).single("image");
 import multer from "multer";
 import { v4 as uuidv4 } from 'uuid';
 

@@ -8,6 +8,11 @@ const submitApplication = async (req, res) => {
       contact,
       motherName,
       fatherName,
+      accountNumber,
+      ifscCode,
+      bankName,
+      voterIdNumber,
+      tecNumber,
       nomineeName,
       nomineeDob,
       nomineeRelation,
@@ -40,7 +45,11 @@ Email: ${email}
 Contact:${contact}
 Mother Name: ${motherName}
 Father Name: ${fatherName}
-
+Account Number:${accountNumber}
+IFSC Code:${ifscCode}
+Bank Name:${bankName}
+Voter Id Number:${voterIdNumber}
+TEC Number:${tecNumber}
 Nominee Name: ${nomineeName}
 Nominee DOB: ${nomineeDob}
 Nominee Relation: ${nomineeRelation}
