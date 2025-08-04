@@ -50,6 +50,7 @@ app.use('/api',coursesRoutes)
 app.use('/api/contact',contactRoutes); 
 app.use('/api', CSCRoutes);
 app.use('/api', IIBFRoutes);
+app.use('/api', userRoutes);
 app.use('/api',coursesRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api', EmitraRoutes);
