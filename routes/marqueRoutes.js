@@ -26,7 +26,7 @@ router.post('/marquee', async (req, res) => {
   }
 });
 // DELETE latest marquee
-router.delete('/marquee/latest', async (req, res) => {
+router.delete('/marquee/:id', async (req, res) => {
   try {
     const latest = await Marquee.findOne().sort({ updatedAt: -1 });
     if (!latest) {
