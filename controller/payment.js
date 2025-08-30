@@ -1,6 +1,6 @@
 // controllers/paymentController.js
 import { instance } from '../razorpay.js';
-import { Courses } from '../models/courses.js';
+import Course from '../models/course.js';
 import { User } from '../models/user.js';
 
 export const checkout = async (req, res) => {

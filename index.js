@@ -2,11 +2,11 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import coursesRoutes from './routes/courses.js'
 import adminRoutes from './routes/adminRoutes.js'
 import RazorPay from 'razorpay'
 import path from 'path';
 import { fileURLToPath } from 'url';
+
 
 // Load environment variables
 dotenv.config();
@@ -40,23 +40,24 @@ import contactRoutes from './routes/contact.js'
 import applyRoutes from './routes/apply.js'
 import EmitraRoutes from './routes/emitra.js'
 import CSCRoutes from './routes/CSCRoute.js'
+import jobRoutes from './routes/jobRoutes.js'
 import IIBFRoutes from './routes/IIBFRoute.js'
 import Visit from './routes/Visitor.js'
-import courseRoutes from './routes/courseRoutes.js'
 import marqueeRoutes from './routes/marqueRoutes.js'
 import formRoutes from './routes/formRoutes.js'
+import courseRoutes from './routes/courseRoutes.js'
 app.use('/api', applyRoutes)
-app.use('/api',coursesRoutes)
 app.use('/api/contact',contactRoutes); 
 app.use('/api', CSCRoutes);
 app.use('/api', IIBFRoutes);
 app.use('/api', userRoutes);
-app.use('/api',coursesRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api', EmitraRoutes);
+app.use('/api/jobs', jobRoutes);
 app.use('/api', Visit);
 app.use('/api',marqueeRoutes)
 app.use('/api',formRoutes)
+app.use('/api/courses',courseRoutes)
 import paymentRoutes from './routes/payment.js';
 import Visitor from './models/Visitor.js';
 app.use('/api/payment', paymentRoutes);
@@ -68,7 +69,7 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-const PORT = 4001 || 4000;
+const PORT = 5001 || 4000;
 app.listen(PORT, () => {
     console.log(`🚀 Server is Running on port ${PORT}`);
 });

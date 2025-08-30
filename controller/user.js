@@ -212,4 +212,15 @@ export const resendOtp = tryCatch(async (req, res) => {
     activationToken: newToken, // Send back new token
   });
 });
+// Add this in controller/user.js
+export const getAllUsers = tryCatch(async (req, res) => {
+  const adminUser = await User.findById(req.user._id);
+  if (!adminUser || adminUser.role !== 'admin') {
+    return res.status(403).json({ message: "Access denied. Admins only." });
+  }
+
+  const users = await User.find().sort({ createdAt: -1 });
+  res.json({ users });
+});
+
 

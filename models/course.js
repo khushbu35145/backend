@@ -1,4 +1,21 @@
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
+
+// const courseSchema = new mongoose.Schema({
+//   title: {
+//     type: String,
+//     required: true,
+//   },
+//   category: String,
+//   price: Number,
+//   duration: String,
+//   description: String,
+//   image: String,
+// }, { timestamps: true });
+
+// const Course = mongoose.model('Course', courseSchema);
+
+// export default Course;
+import mongoose from "mongoose";
 
 const courseSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -7,8 +24,10 @@ const courseSchema = new mongoose.Schema({
   oldPrice: { type: String },
   duration: { type: String, required: true },
   label: { type: String },
-  image: { type: String, required: true }, // Store image URL or path
+  image: { type: String, required: true },
 }, { timestamps: true });
 
-const Course = mongoose.model('Course', courseSchema);
+const Course= mongoose.model("Course", courseSchema);
 export default Course;
+
+
