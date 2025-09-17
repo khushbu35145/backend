@@ -46,10 +46,15 @@ import Visit from './routes/Visitor.js'
 import marqueeRoutes from './routes/marqueRoutes.js'
 import formRoutes from './routes/formRoutes.js'
 import courseRoutes from './routes/courseRoutes.js'
+import universityRoutes from './routes/universityRoutes.js'
+import universityTableRoutes from './routes/universityTableRoutes.js'
+import partnershipRoutes from './routes/partnershipRoutes.js'
+import applicationRoutes from './routes/applicationRoutes.js'
 app.use('/api', applyRoutes)
 app.use('/api/contact',contactRoutes); 
 app.use('/api', CSCRoutes);
 app.use('/api', IIBFRoutes);
+app.use('/api/partnership', partnershipRoutes);
 app.use('/api', userRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api', EmitraRoutes);
@@ -57,7 +62,10 @@ app.use('/api/jobs', jobRoutes);
 app.use('/api', Visit);
 app.use('/api',marqueeRoutes)
 app.use('/api',formRoutes)
+app.use('/api',applicationRoutes)
+app.use('/api/universityTable',universityTableRoutes)
 app.use('/api/courses',courseRoutes)
+app.use("/api", universityRoutes);
 import paymentRoutes from './routes/payment.js';
 import Visitor from './models/Visitor.js';
 app.use('/api/payment', paymentRoutes);
