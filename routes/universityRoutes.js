@@ -1,49 +1,9 @@
-// // import express from "express";
-// // import {
-// //   getUniversities,
-// //   addUniversity,
-// //   updateUniversity,
-// //   deleteUniversity,
-// // } from "../controller/universityController.js";
 
-// // const router = express.Router();
-
-// // router.get("/", getUniversities);
-// // router.post("/", addUniversity);
-// // router.put("/:id", updateUniversity);
-// // router.delete("/:id", deleteUniversity);
-
-// // export default router;
-// // routes/universityRoutes.js
-// import express from "express";
-// import multer from "multer";
-// import { createUniversity, getUniversities, deleteUniversity } from "../controller/universityController.js";
-
-// const router = express.Router();
-
-// // Multer setup for logo uploads
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads/universities");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
-// });
-// const upload = multer({ storage });
-
-// // Routes
-// router.post("/", upload.single("logo"), createUniversity);
-// router.get("/", getUniversities);
-// router.delete("/:id", deleteUniversity);
-
-// export default router;
-// routes/universityRoutes.js
 import express from "express";
 import multer from "multer";
 import fs from "fs";
 import path from "path"
-import { createUniversity, getUniversities, deleteUniversity } from "../controller/universityController.js";
+import { createUniversity, getUniversities, deleteUniversity, updateUniversity } from "../controller/universityController.js";
 
 
 const router = express.Router();
@@ -71,6 +31,7 @@ const upload = multer({ storage });
 router.post("/universities", upload.single("logo"), createUniversity);
 router.get("/universities", getUniversities);
 router.delete("/universities/:id", deleteUniversity);
+router.put("/universities/:id", upload.single("logo"), updateUniversity);
 
 export default router;
 

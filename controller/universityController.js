@@ -1,53 +1,4 @@
-// import University from "../models/University.js";
 
-// // Get all universities
-// export const getUniversities = async (req, res) => {
-//   try {
-//     const universities = await University.find();
-//     res.json(universities);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-// // Add new university
-// export const addUniversity = async (req, res) => {
-//   try {
-//     const { name, bgColor, icon } = req.body;
-//     const newUniversity = new University({ name, bgColor, icon });
-//     await newUniversity.save();
-//     res.status(201).json(newUniversity);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-// // Update university
-// export const updateUniversity = async (req, res) => {
-//   try {
-//     const university = await University.findByIdAndUpdate(
-//       req.params.id,
-//       req.body,
-//       { new: true }
-//     );
-//     if (!university) return res.status(404).json({ message: "Not found" });
-//     res.json(university);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-// // Delete university
-// export const deleteUniversity = async (req, res) => {
-//   try {
-//     const university = await University.findByIdAndDelete(req.params.id);
-//     if (!university) return res.status(404).json({ message: "Not found" });
-//     res.json({ message: "University deleted" });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-// controllers/universityController.js
 import University from "../models/University.js";
 
 // Create new university
@@ -89,6 +40,32 @@ export const deleteUniversity = async (req, res) => {
     res.json({ message: "University deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting university", error: error.message });
+  }
+};
+// Update university
+export const updateUniversity = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { universityName, mode, district, state } = req.body;
+
+    const updateData = { universityName, mode, district, state };
+
+    if (req.file) {
+      updateData.logo = req.file.path; // update logo if a new one uploaded
+    }
+
+    const university = await University.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!university) {
+      return res.status(404).json({ message: "University not found" });
+    }
+
+    res.json({ message: "University updated successfully", university });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating university", error: error.message });
   }
 };
 
