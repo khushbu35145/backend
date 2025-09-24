@@ -50,6 +50,7 @@ import universityRoutes from './routes/universityRoutes.js'
 import universityTableRoutes from './routes/universityTableRoutes.js'
 import partnershipRoutes from './routes/partnershipRoutes.js'
 import applicationRoutes from './routes/applicationRoutes.js'
+import collegeCourseRoutes from './routes/collegeCouseRoutes.js'
 app.use('/api', applyRoutes)
 app.use('/api/contact',contactRoutes); 
 app.use('/api', CSCRoutes);
@@ -66,6 +67,7 @@ app.use('/api',applicationRoutes)
 app.use('/api/universityTable',universityTableRoutes)
 app.use('/api/courses',courseRoutes)
 app.use("/api", universityRoutes);
+app.use("/api/collegeCourse", collegeCourseRoutes);
 import paymentRoutes from './routes/payment.js';
 import Visitor from './models/Visitor.js';
 app.use('/api/payment', paymentRoutes);
