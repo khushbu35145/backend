@@ -1,6 +1,6 @@
 import express from 'express'
 import { isAdmin, isAuth } from '../middleware/auth.js';
-import { addLecture,createCourse,  deleteCourse, deleteLecture } from '../controller/admin.js';
+import { addLecture,createCourse,  deleteCourse, deleteLecture,getAllStats } from '../controller/admin.js';
 import { handleUpload} from '../middleware/multer.js';
 
 const router=express.Router();
@@ -14,4 +14,7 @@ router.post('/courses/new',
 router.post('/course/:id',handleUpload,addLecture)
 router.delete('/lecture/:id',deleteLecture)
 router.delete('/course/:id',deleteCourse)
+router.get('/stats',getAllStats)
+
+
 export default router;

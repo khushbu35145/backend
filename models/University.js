@@ -9,12 +9,11 @@ const UniversitySchema = new mongoose.Schema(
       trim: true,
     },
     logo: {
-      type: String, // will store file path or image URL
-      required: false,
+      type: String, // Cloudinary URL
     },
     mode: {
       type: String,
-      enum: ["Online", "Distance", "Regular"],
+      enum: ["Online", "Distance", "Regular", "Private"],
       required: true,
     },
     district: {
@@ -30,4 +29,5 @@ const UniversitySchema = new mongoose.Schema(
 );
 
 export default mongoose.model("University", UniversitySchema);
+
 

@@ -44,6 +44,7 @@ import jobRoutes from './routes/jobRoutes.js'
 import IIBFRoutes from './routes/IIBFRoute.js'
 import Visit from './routes/Visitor.js'
 import marqueeRoutes from './routes/marqueRoutes.js'
+import coursesRoutes from './routes/courses.js'
 import formRoutes from './routes/formRoutes.js'
 import courseRoutes from './routes/courseRoutes.js'
 import universityRoutes from './routes/universityRoutes.js'
@@ -57,6 +58,7 @@ app.use('/api', CSCRoutes);
 app.use('/api', IIBFRoutes);
 app.use('/api/partnership', partnershipRoutes);
 app.use('/api', userRoutes);
+app.use('/api/courses', coursesRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api', EmitraRoutes);
 app.use('/api/jobs', jobRoutes);

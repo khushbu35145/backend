@@ -1,15 +1,26 @@
 
-import University from "../models/University.js";
 
-// Create new university
+import University from "../models/University.js";
+import cloudinary from "../config/cloudinary.js";
+import fs from "fs";
+
+// ✅ Create University
 export const createUniversity = async (req, res) => {
   try {
     const { universityName, mode, district, state } = req.body;
-    const logo = req.file ? req.file.path : null; // logo from file upload
+    let logoUrl = null;
+
+    if (req.file) {
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "universities",
+      });
+      logoUrl = result.secure_url;
+      fs.unlinkSync(req.file.path); // remove local file
+    }
 
     const university = new University({
       universityName,
-      logo,
+      logo: logoUrl,
       mode,
       district,
       state,
@@ -22,17 +33,17 @@ export const createUniversity = async (req, res) => {
   }
 };
 
-// Get all universities
+// ✅ Get All Universities
 export const getUniversities = async (req, res) => {
   try {
-    const universities = await University.find();
+    const universities = await University.find().sort({ createdAt: -1 });
     res.json(universities);
   } catch (error) {
     res.status(500).json({ message: "Error fetching universities", error: error.message });
   }
 };
 
-// Delete university
+// ✅ Delete University
 export const deleteUniversity = async (req, res) => {
   try {
     const { id } = req.params;
@@ -42,16 +53,21 @@ export const deleteUniversity = async (req, res) => {
     res.status(500).json({ message: "Error deleting university", error: error.message });
   }
 };
-// Update university
+
+// ✅ Update University
 export const updateUniversity = async (req, res) => {
   try {
     const { id } = req.params;
     const { universityName, mode, district, state } = req.body;
 
-    const updateData = { universityName, mode, district, state };
+    let updateData = { universityName, mode, district, state };
 
     if (req.file) {
-      updateData.logo = req.file.path; // update logo if a new one uploaded
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "universities",
+      });
+      updateData.logo = result.secure_url;
+      fs.unlinkSync(req.file.path);
     }
 
     const university = await University.findByIdAndUpdate(id, updateData, {
@@ -68,4 +84,3 @@ export const updateUniversity = async (req, res) => {
     res.status(500).json({ message: "Error updating university", error: error.message });
   }
 };
-

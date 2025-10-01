@@ -11,3 +11,4 @@ const schema = new mongoose.Schema({
 });
 
 export const  Apply = mongoose.model("Applicants",schema);
+
