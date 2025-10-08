@@ -6,6 +6,7 @@ import adminRoutes from './routes/adminRoutes.js'
 import RazorPay from 'razorpay'
 import path from 'path';
 import { fileURLToPath } from 'url';
+import excelRoutes from './routes/excelRoute.js'
 
 
 // Load environment variables
@@ -52,12 +53,14 @@ import universityTableRoutes from './routes/universityTableRoutes.js'
 import partnershipRoutes from './routes/partnershipRoutes.js'
 import applicationRoutes from './routes/applicationRoutes.js'
 import collegeCourseRoutes from './routes/collegeCouseRoutes.js'
+import enrollRoutes from './routes/enrollRoute.js'
 app.use('/api', applyRoutes)
 app.use('/api/contact',contactRoutes); 
 app.use('/api', CSCRoutes);
 app.use('/api', IIBFRoutes);
 app.use('/api/partnership', partnershipRoutes);
 app.use('/api', userRoutes);
+app.use("/api/excel", excelRoutes);
 app.use('/api/courses', coursesRoutes);
 app.use('/api/admin',adminRoutes);
 app.use('/api', EmitraRoutes);
@@ -65,6 +68,7 @@ app.use('/api/jobs', jobRoutes);
 app.use('/api', Visit);
 app.use('/api',marqueeRoutes)
 app.use('/api',formRoutes)
+app.use('/api',enrollRoutes)
 app.use('/api',applicationRoutes)
 app.use('/api/universityTable',universityTableRoutes)
 app.use('/api/courses',courseRoutes)
